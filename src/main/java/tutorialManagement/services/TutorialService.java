@@ -3,10 +3,12 @@ package tutorialManagement.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tutorialManagement.model.Tutorial;
+import tutorialManagement.model.TutorialChildStep;
+import tutorialManagement.model.TutorialStep;
+import tutorialManagement.repositories.TutorialChildStepRepository;
 import tutorialManagement.repositories.TutorialRepository;
+import tutorialManagement.repositories.TutorialStepRepository;
 
-import java.io.*;
-import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,6 +17,10 @@ public class TutorialService {
 
     @Autowired
     private TutorialRepository tutorialRepository;
+    @Autowired
+    private TutorialStepRepository tutorialStepRepository;
+    @Autowired
+    private TutorialChildStepRepository tutorialChildStepRepository;
 
     public void addTutorial(Tutorial tutorial){
         tutorialRepository.save(tutorial);
@@ -29,7 +35,9 @@ public class TutorialService {
 
     public Optional<Tutorial> getTutorialById(long id) {
 
-        return  tutorialRepository.findById(id);
+        Optional<Tutorial> tutorial = tutorialRepository.findById(id);
+
+        return  tutorial;
        //String audio = getAudioAsBase64("C:\\Users\\carom\\Documents\\FHV\\Master\\Angular-Projects\\resourcen\\sound.mp3");
 
     }

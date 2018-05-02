@@ -11,6 +11,16 @@ public class TutorialGetView {
     private String shortDescription;
     private List<TutorialStepGetView> steps;
 
+    public TutorialGetView() {
+    }
+
+    public TutorialGetView(Long id, String titel, String shortDescription, List<TutorialStepGetView> steps) {
+        this.id = id;
+        this.titel = titel;
+        this.shortDescription = shortDescription;
+        this.steps = steps;
+    }
+
     public Long getId() {
         return id;
     }

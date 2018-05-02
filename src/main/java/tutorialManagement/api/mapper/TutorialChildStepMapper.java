@@ -9,7 +9,7 @@ import tutorialManagement.model.Tutorial;
 import tutorialManagement.model.TutorialChildStep;
 import tutorialManagement.model.TutorialStep;
 
-@Mapper(componentModel = "spring", uses = ResourceMapper.class)
+@Mapper(componentModel = "spring", uses = {ResourceMapper.class, TutorialStepMapper.class})
 public interface TutorialChildStepMapper {
 
     TutorialChildStep createViewToTutorialChildStep(TutorialChildStepCreateView tutorialChildStepCreateView);

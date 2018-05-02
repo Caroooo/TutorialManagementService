@@ -8,14 +8,16 @@ public class Resource {
     private long id;
     private ResourceType resourceType;
     private String path;
+    private TutorialChildStep tutorialChildStep;
 
     public Resource() {
     }
 
-    public Resource(long id, ResourceType resourceType, String path) {
+    public Resource(long id, ResourceType resourceType, String path, TutorialChildStep tutorialChildStep) {
         this.id = id;
         this.resourceType = resourceType;
         this.path = path;
+        this.tutorialChildStep = tutorialChildStep;
     }
 
     @Id
@@ -43,5 +45,14 @@ public class Resource {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    @OneToOne
+    public TutorialChildStep getTutorialChildStep() {
+        return tutorialChildStep;
+    }
+
+    public void setTutorialChildStep(TutorialChildStep tutorialChildStep) {
+        this.tutorialChildStep = tutorialChildStep;
     }
 }

@@ -8,6 +8,16 @@ public class TutorialChildStepGetView {
     private String description;
     private ResourceGetView resource;
 
+    public TutorialChildStepGetView() {
+    }
+
+    public TutorialChildStepGetView(long id, String titel, String description, ResourceGetView resource) {
+        this.id = id;
+        this.titel = titel;
+        this.description = description;
+        this.resource = resource;
+    }
+
     public long getId() {
         return id;
     }
@@ -39,4 +49,5 @@ public class TutorialChildStepGetView {
     public void setResource(ResourceGetView resource) {
         this.resource = resource;
     }
-}
+
+   }

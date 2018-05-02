@@ -8,6 +8,16 @@ public class TutorialStepGetView {
     private String titel;
     private List<TutorialChildStepGetView> tutorialChildSteps;
 
+    public TutorialStepGetView() {
+    }
+
+    public TutorialStepGetView(long id, String titel, List<TutorialChildStepGetView> tutorialChildSteps) {
+        this.id = id;
+        this.titel = titel;
+        this.tutorialChildSteps = tutorialChildSteps;
+
+    }
+
     public long getId() {
         return id;
     }

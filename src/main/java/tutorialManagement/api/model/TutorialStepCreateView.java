@@ -9,12 +9,14 @@ public class TutorialStepCreateView {
     private String titel;
     private List<TutorialChildStepCreateView> tutorialChildSteps;
 
+
     public TutorialStepCreateView() {
     }
 
     public TutorialStepCreateView(String titel, List<TutorialChildStepCreateView> tutorialChildSteps) {
         this.titel = titel;
         this.tutorialChildSteps = tutorialChildSteps;
+
     }
 
     public String getTitel() {

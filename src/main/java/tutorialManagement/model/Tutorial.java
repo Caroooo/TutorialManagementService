@@ -46,7 +46,7 @@ public class Tutorial {
         this.shortDescription = shortDescription;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     public List<TutorialStep> getSteps() {
         return steps;
     }

@@ -9,16 +9,20 @@ public class TutorialChildStep {
     private String titel;
     private String description;
     private Resource resource;
+    private TutorialStep tutorialStep;
+
 
 
     public TutorialChildStep() {
     }
 
-    public TutorialChildStep(long id, String titel, String description, Resource resource) {
+    public TutorialChildStep(long id, String titel, String description, Resource resource, TutorialStep tutorialStep) {
         this.id = id;
         this.titel = titel;
         this.description = description;
         this.resource = resource;
+        this.tutorialStep = tutorialStep;
+
     }
 
     @Id
@@ -47,12 +51,21 @@ public class TutorialChildStep {
         this.description = description;
     }
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     public Resource getResource() {
         return resource;
     }
 
     public void setResource(Resource resource) {
         this.resource = resource;
+    }
+
+    @ManyToOne
+    public TutorialStep getTutorialStep() {
+        return tutorialStep;
+    }
+
+    public void setTutorialStep(TutorialStep tutorialStep) {
+        this.tutorialStep = tutorialStep;
     }
 }

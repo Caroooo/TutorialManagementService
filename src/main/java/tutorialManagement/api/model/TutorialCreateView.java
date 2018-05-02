@@ -10,6 +10,15 @@ public class TutorialCreateView {
     private String shortDescription;
     private List<TutorialStepCreateView> steps;
 
+    public TutorialCreateView() {
+    }
+
+    public TutorialCreateView(String titel, String shortDescription, List<TutorialStepCreateView> steps) {
+        this.titel = titel;
+        this.shortDescription = shortDescription;
+        this.steps = steps;
+    }
+
     public String getTitel() {
         return titel;
     }
@@ -33,4 +42,6 @@ public class TutorialCreateView {
     public void setSteps(List<TutorialStepCreateView> steps) {
         this.steps = steps;
     }
+
+
 }
