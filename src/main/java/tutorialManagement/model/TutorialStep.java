@@ -8,6 +8,7 @@ public class TutorialStep {
 
     private long id;
     private String titel;
+    private String shortDescription;
     private List<TutorialChildStep> tutorialChildSteps;
     private Tutorial tutorial;
 
@@ -15,9 +16,10 @@ public class TutorialStep {
     public TutorialStep() {
     }
 
-    public TutorialStep(long id, String titel, List<TutorialChildStep> tutorialChildSteps, Tutorial tutorial) {
+    public TutorialStep(long id, String titel, String shortDescription, List<TutorialChildStep> tutorialChildSteps, Tutorial tutorial) {
         this.id = id;
         this.titel = titel;
+        this.shortDescription = shortDescription;
         this.tutorialChildSteps = tutorialChildSteps;
         this.tutorial = tutorial;
     }
@@ -38,6 +40,14 @@ public class TutorialStep {
 
     public void setTitel(String titel) {
         this.titel = titel;
+    }
+
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

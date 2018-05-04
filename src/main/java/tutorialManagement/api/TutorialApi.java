@@ -2,18 +2,24 @@ package tutorialManagement.api;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import tutorialManagement.Application;
 import tutorialManagement.api.mapper.TutorialMapper;
 import tutorialManagement.api.model.TutorialCreateView;
 import tutorialManagement.api.model.TutorialGetView;
 import tutorialManagement.api.model.TutorialsGetView;
-import tutorialManagement.model.Resource;
+
 import tutorialManagement.model.Tutorial;
 import tutorialManagement.services.ResourceService;
+import tutorialManagement.services.StorageService;
 import tutorialManagement.services.TutorialService;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
@@ -24,6 +30,8 @@ public class TutorialApi {
 
     @Autowired
     private TutorialService tutorialService;
+    @Autowired
+    private StorageService storageService;
     @Autowired
     private TutorialMapper tutorialMapper;
     @Autowired
@@ -63,13 +71,18 @@ public class TutorialApi {
     }
 
     @CrossOrigin
-    @GetMapping(value = "/tutorials/resources/{resourceId}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public String getResource(@PathVariable("resourceId") long id) {
-        Optional<Resource> resource = resourceService.getResourceById(id);
+    @GetMapping(value = "/tutorials/resources/{resourceId}")
+    @ResponseBody
+    public ResponseEntity<Resource> getResource(@PathVariable("resourceId") long id) {
+        Optional<tutorialManagement.model.Resource> resource = resourceService.getResourceById(id);
         if(resource.isPresent()){
-            return resourceService.getImage(resource.get().getPath());
+
+            Resource file = resourceService.loadFile(resource.get().getPath(), resource.get().getResourceType());
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                    "attachment; filename\"" +file.getFilename() + "\"")
+                    .body(file);
         }
-        return null;
+        return ResponseEntity.notFound().build();
     }
 
 }
