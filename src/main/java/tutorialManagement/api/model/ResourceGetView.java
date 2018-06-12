@@ -6,7 +6,7 @@ public class ResourceGetView {
 
     private long id;
     private ResourceType resourceType;
-    private String path;
+    private String originalName;
 
     public long getId() {
         return id;
@@ -24,11 +24,11 @@ public class ResourceGetView {
         this.resourceType = resourceType;
     }
 
-    public String getPath() {
-        return path;
+    public String getOriginalName() {
+        return originalName;
     }
 
-    public void setPath(String path) {
-        this.path = path;
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
     }
 }

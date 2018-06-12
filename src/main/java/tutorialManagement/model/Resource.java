@@ -8,15 +8,17 @@ public class Resource {
     private long id;
     private ResourceType resourceType;
     private String path;
+    private String originalName;
     private TutorialChildStep tutorialChildStep;
 
     public Resource() {
     }
 
-    public Resource(long id, ResourceType resourceType, String path, TutorialChildStep tutorialChildStep) {
+    public Resource(long id, ResourceType resourceType, String path, String originalName, TutorialChildStep tutorialChildStep) {
         this.id = id;
         this.resourceType = resourceType;
         this.path = path;
+        this.originalName = originalName;
         this.tutorialChildStep = tutorialChildStep;
     }
 
@@ -45,6 +47,14 @@ public class Resource {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    public String getOriginalName() {
+        return originalName;
+    }
+
+    public void setOriginalName(String originalName) {
+        this.originalName = originalName;
     }
 
     @OneToOne

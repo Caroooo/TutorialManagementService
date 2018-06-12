@@ -2,6 +2,13 @@ package tutorialManagement.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import tutorialManagement.api.mapper.TutorialChildStepMapper;
+import tutorialManagement.api.mapper.TutorialMapper;
+import tutorialManagement.api.mapper.TutorialStepMapper;
+import tutorialManagement.api.model.TutorialChildStepCreateView;
+import tutorialManagement.api.model.TutorialCreateView;
+import tutorialManagement.api.model.TutorialStepCreateView;
+import tutorialManagement.model.Resource;
 import tutorialManagement.model.Tutorial;
 import tutorialManagement.model.TutorialChildStep;
 import tutorialManagement.model.TutorialStep;
@@ -9,6 +16,7 @@ import tutorialManagement.repositories.TutorialChildStepRepository;
 import tutorialManagement.repositories.TutorialRepository;
 import tutorialManagement.repositories.TutorialStepRepository;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,8 +29,35 @@ public class TutorialService {
     private TutorialStepRepository tutorialStepRepository;
     @Autowired
     private TutorialChildStepRepository tutorialChildStepRepository;
+    @Autowired
+    private ResourceService resourceService;
+    @Autowired
+    private TutorialMapper tutorialMapper;
+    @Autowired
+    private TutorialChildStepMapper tutorialChildStepMapper;
+    @Autowired
+    private TutorialStepMapper tutorialStepMapper;
 
-    public void addTutorial(Tutorial tutorial){
+    public void addTutorial(TutorialCreateView tutorialCreateView){
+        List<TutorialStep> steps = new LinkedList<>();
+        for(TutorialStepCreateView tutorialStepCreateView : tutorialCreateView.getSteps()){
+            TutorialStep tutorialStep = tutorialStepMapper.createViewToTutorialStep(tutorialStepCreateView);
+            List<TutorialChildStep> childSteps = new LinkedList<>();
+            for(TutorialChildStepCreateView childStepCreateView : tutorialStepCreateView.getTutorialChildSteps()){
+                TutorialChildStep childStep = tutorialChildStepMapper.createViewToTutorialChildStep(childStepCreateView);
+                Optional<tutorialManagement.model.Resource> resource = resourceService.getResourceById(childStepCreateView.getResourceId());
+                if(resource.isPresent()){
+                    childStep.setResource(resource.get());
+                }
+                childSteps.add(childStep);
+            }
+            tutorialStep.setTutorialChildSteps(childSteps);
+            steps.add(tutorialStep);
+        }
+        Tutorial tutorial = new Tutorial();
+        tutorial.setTitel(tutorialCreateView.getTitel());
+        tutorial.setShortDescription(tutorialCreateView.getShortDescription());
+        tutorial.setSteps(steps);
         tutorialRepository.save(tutorial);
     }
 
@@ -43,5 +78,15 @@ public class TutorialService {
     }
 
 
+    public void setResourceToChildStep(long childStepId, long resourceId) {
+        Optional<TutorialChildStep> childStep = tutorialChildStepRepository.findById(childStepId);
+        Optional<Resource> resource = resourceService.getResourceById(resourceId);
 
+        if(childStep.isPresent() && resource.isPresent()){
+            childStep.get().setResource(resource.get());
+            resource.get().setTutorialChildStep(childStep.get());
+            tutorialChildStepRepository.save(childStep.get());
+            resourceService.saveResource(resource.get());
+        }
+    }
 }

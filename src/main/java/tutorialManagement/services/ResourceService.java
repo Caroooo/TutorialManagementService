@@ -3,15 +3,18 @@ package tutorialManagement.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import tutorialManagement.model.Resource;
 import tutorialManagement.model.ResourceType;
 import tutorialManagement.repositories.ResourceRepository;
 
 import java.io.*;
 import java.net.MalformedURLException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -24,6 +27,10 @@ public class ResourceService {
 
     public Optional<Resource> getResourceById(long id){
         return resourceRepository.findById(id);
+    }
+
+    public List<Resource> getResources(){
+        return resourceRepository.findAll();
     }
 
     public org.springframework.core.io.Resource loadFile(String filename, ResourceType resourceType) {
@@ -70,5 +77,39 @@ public class ResourceService {
                 break;
         }
         return prefix + contentInBase64;
+    }
+
+    public Resource store(MultipartFile file) {
+        Resource resource = new Resource();
+        resource.setOriginalName(file.getOriginalFilename());
+        String ending = "";
+        if(file.getOriginalFilename().endsWith(".png")){
+            ending = ".png";
+            resource.setResourceType(ResourceType.IMAGE);
+        } else if(file.getOriginalFilename().endsWith(".jpg")){
+            ending = ".jpg";
+            resource.setResourceType(ResourceType.IMAGE);
+        }else if (file.getOriginalFilename().endsWith(".mp3")){
+            ending = ".mp3";
+            resource.setResourceType(ResourceType.AUDIO);
+        }else if(file.getOriginalFilename().endsWith(".mp4")){
+            ending = ".mp4";
+            resource.setResourceType(ResourceType.VIDEO);
+        }
+
+        Resource savedResource = resourceRepository.save(resource);
+        savedResource.setPath(savedResource.getId() + ending);
+        resourceRepository.save(savedResource);
+        try {
+            Files.copy(file.getInputStream(), this.rootLocation.resolve(savedResource.getPath()));
+        } catch (Exception e) {
+            throw new RuntimeException("FAIL!");
+        }
+
+        return savedResource;
+    }
+
+    public void saveResource(Resource resource) {
+        resourceRepository.save(resource);
     }
 }

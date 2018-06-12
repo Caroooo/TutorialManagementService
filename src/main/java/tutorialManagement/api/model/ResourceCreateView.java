@@ -4,30 +4,20 @@ import tutorialManagement.model.ResourceType;
 
 public class ResourceCreateView {
 
-    private ResourceType resourceType;
-    private String path;
+    private long id;
 
     public ResourceCreateView() {
     }
 
-    public ResourceCreateView(ResourceType resourceType, String path) {
-        this.resourceType = resourceType;
-        this.path = path;
+    public ResourceCreateView(long id) {
+        this.id = id;
     }
 
-    public ResourceType getResourceType() {
-        return resourceType;
+    public long getId() {
+        return id;
     }
 
-    public void setResourceType(ResourceType resourceType) {
-        this.resourceType = resourceType;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public void setPath(String path) {
-        this.path = path;
+    public void setId(long id) {
+        this.id = id;
     }
 }
