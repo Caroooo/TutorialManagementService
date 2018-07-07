@@ -4,8 +4,8 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>tutorial-management-backend</groupId>
-    <artifactId>tutorial-management-service</artifactId>
+    <groupId>instruction-management-backend</groupId>
+    <artifactId>instruction-management-service</artifactId>
     <version>0.1.0</version>
 
     <parent>

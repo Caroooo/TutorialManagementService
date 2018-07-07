@@ -3,7 +3,7 @@
 ###
 spring:
   datasource:
-    url: jdbc:mysql://localhost/tutorialmanagement
+    url: jdbc:mysql://localhost/instructionmanagement
     username: root
     password:
     driverClassName: com.mysql.jdbc.Driver
@@ -16,9 +16,13 @@ spring:
         show_sql: true
         use_sql_comments: true
         format_sql: true
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
 
-logging:
-  level:
-    org:
-      hibernate:
-        SQL: DEBUG
+#logging:
+#  level:
+#    org:
+#      hibernate:
+#        SQL: DEBUG
