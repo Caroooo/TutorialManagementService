@@ -86,7 +86,7 @@ public class UserApi {
     @RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE,  produces= MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> deleteUserById(@PathVariable("id") long id) {
         userService.deleteUserById(id);
-        return ResponseEntity.accepted().build();
+        return ResponseEntity.noContent().build();
     }
 
     @CrossOrigin
